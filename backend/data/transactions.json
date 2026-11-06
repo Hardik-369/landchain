@@ -1,0 +1,67 @@
+[
+  {
+    "id": "TXN-261106-RVBQ",
+    "type": "investment",
+    "description": "Skyline Residences · 50 units",
+    "amount": -2500000,
+    "userId": "investor-001",
+    "propertyId": "LAND-2026-001",
+    "units": 50,
+    "date": "2026-02-10T09:15:00.000Z",
+    "status": "completed",
+    "reference": "0x9320bbb2e5bbc15a40c44e4a627696342267df9051e4dc9094f3da99bc8326b4",
+    "createdAt": "2026-02-10T09:15:00.000Z"
+  },
+  {
+    "id": "TXN-261106-J1HJ",
+    "type": "investment",
+    "description": "Palm Grove Villas · 25 units",
+    "amount": -1000000,
+    "userId": "investor-001",
+    "propertyId": "LAND-2026-002",
+    "units": 25,
+    "date": "2026-03-02T14:20:00.000Z",
+    "status": "completed",
+    "reference": "0xe5493f4f5c78ffcadf714f6f9462527eb54711d0d7d566652a7b433a154544bc",
+    "createdAt": "2026-03-02T14:20:00.000Z"
+  },
+  {
+    "id": "TXN-261106-R7EQ",
+    "type": "investment",
+    "description": "Cyber Park Tower A · 80 units",
+    "amount": -4000000,
+    "userId": "investor-001",
+    "propertyId": "LAND-2026-003",
+    "units": 80,
+    "date": "2026-04-06T06:40:00.000Z",
+    "status": "completed",
+    "reference": "0xd00a475380f7fdad3cfc459ee85a29e559197813c6ede6c9af5ebdf2407576df",
+    "createdAt": "2026-04-06T06:40:00.000Z"
+  },
+  {
+    "id": "TXN-261106-FW02",
+    "type": "investment",
+    "description": "Maple Court Apartments · 40 units",
+    "amount": -1440000,
+    "userId": "investor-002",
+    "propertyId": "LAND-2026-006",
+    "units": 40,
+    "date": "2026-07-21T12:00:00.000Z",
+    "status": "completed",
+    "reference": "0xe6f52b743a71a92024b99885d8fcf1f546158d086a128f98dafd0a1d441974ba",
+    "createdAt": "2026-07-21T12:00:00.000Z"
+  },
+  {
+    "id": "TXN-261106-CY2M",
+    "type": "investment",
+    "description": "Greenfield Logistics Hub · 30 units",
+    "amount": -900000,
+    "userId": "buyer-001",
+    "propertyId": "LAND-2026-004",
+    "units": 30,
+    "date": "2026-08-12T08:30:00.000Z",
+    "status": "completed",
+    "reference": "0xffdd026226abad5ed0654e3c0b372275bed1eb2b0ba9748a205af9f56d95c50f",
+    "createdAt": "2026-08-12T08:30:00.000Z"
+  }
+]

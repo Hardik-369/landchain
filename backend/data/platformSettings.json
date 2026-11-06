@@ -1,0 +1,14 @@
+{
+  "platformName": "LANDCHAIN",
+  "tokenSymbol": "LANDT",
+  "networkName": "Hedera Testnet",
+  "currency": "INR",
+  "maxInvestmentAmount": 50000000,
+  "maintenanceMode": false,
+  "verificationSlaHours": 48,
+  "supportEmail": "support@landchain.in",
+  "dataVersion": 1,
+  "seededAt": "2026-10-01T09:00:00.000Z",
+  "updatedAt": "2026-10-01T09:00:00.000Z",
+  "updatedBy": "seed"
+}

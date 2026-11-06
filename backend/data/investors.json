@@ -1,0 +1,76 @@
+[
+  {
+    "id": "INVSTR-261106-NW73",
+    "userId": "buyer-001",
+    "name": "Neha Kulkarni",
+    "kycStatus": "verified",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-004",
+        "title": "Greenfield Logistics Hub",
+        "units": 30,
+        "invested": 900000,
+        "ownershipPercent": 0.9375
+      }
+    ],
+    "totalInvested": 900000,
+    "totalUnits": 30,
+    "propertiesCount": 1,
+    "createdAt": "2026-10-01T09:00:00.000Z",
+    "updatedAt": "2026-10-01T09:00:00.000Z"
+  },
+  {
+    "id": "INVSTR-261106-A759",
+    "userId": "investor-001",
+    "name": "Kabir Shah",
+    "kycStatus": "verified",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-001",
+        "title": "Skyline Residences",
+        "units": 50,
+        "invested": 2500000,
+        "ownershipPercent": 2
+      },
+      {
+        "propertyId": "LAND-2026-002",
+        "title": "Palm Grove Villas",
+        "units": 25,
+        "invested": 1000000,
+        "ownershipPercent": 1.1905
+      },
+      {
+        "propertyId": "LAND-2026-003",
+        "title": "Cyber Park Tower A",
+        "units": 80,
+        "invested": 4000000,
+        "ownershipPercent": 2.2857
+      }
+    ],
+    "totalInvested": 7500000,
+    "totalUnits": 155,
+    "propertiesCount": 3,
+    "createdAt": "2026-10-01T09:00:00.000Z",
+    "updatedAt": "2026-10-01T09:00:00.000Z"
+  },
+  {
+    "id": "INVSTR-261106-VLCU",
+    "userId": "investor-002",
+    "name": "Ananya Rao",
+    "kycStatus": "pending",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-006",
+        "title": "Maple Court Apartments",
+        "units": 40,
+        "invested": 1440000,
+        "ownershipPercent": 2
+      }
+    ],
+    "totalInvested": 1440000,
+    "totalUnits": 40,
+    "propertiesCount": 1,
+    "createdAt": "2026-10-01T09:00:00.000Z",
+    "updatedAt": "2026-10-01T09:00:00.000Z"
+  }
+]
