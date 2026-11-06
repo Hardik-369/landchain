@@ -1,0 +1,30 @@
+{
+  "name": "landchain-blockchain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LANDCHAIN - Hedera Testnet integration: HTS tokens, HCS audit log, Solidity contracts and Mirror Node reads",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "npm run test:contracts && npm run test:unit",
+    "test:contracts": "hardhat test",
+    "test:unit": "node --test test/unit/*.test.js",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network hederaTestnet",
+    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
+    "topic:create": "node scripts/create-topic.js",
+    "verify:testnet": "node scripts/verify-testnet.js",
+    "demo": "node scripts/demo-flow.js"
+  },
+  "dependencies": {
+    "@hashgraph/sdk": "^2.81.0",
+    "ethers": "^6.17.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.1.3",
+    "express": "^4.22.3",
+    "hardhat": "^2.29.1"
+  }
+}
