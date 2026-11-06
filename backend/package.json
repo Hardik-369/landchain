@@ -1,0 +1,21 @@
+{
+  "name": "landchain-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LANDCHAIN backend - REST APIs and JSON file storage for fractional real estate",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node scripts/seed.mjs --force",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
