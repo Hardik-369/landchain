@@ -112,14 +112,14 @@ class ContractsClient {
 
   /** Read-only call - no gas, no signature. */
   async call(name, method, args = []) {
+    const contract = this.contract(name);
+    if (typeof contract[method] !== "function") {
+      throw new ValidationError(`Unknown ${name} method "${method}".`);
+    }
     try {
-      const contract = this.contract(name);
-      if (typeof contract[method] !== "function") {
-        throw new ValidationError(`Unknown ${name} method "${method}".`);
-      }
       return await contract[method](...args);
     } catch (error) {
-      throw this._wrap(error, `${name}.${method}() read failed`);
+      throw this._wrap(error, `${name}.${method}() read failed`, contract);
     }
   }
 
@@ -146,7 +146,7 @@ class ContractsClient {
     } catch (error) {
       // Estimation frequently fails when the call would revert - let the wrapped
       // error explain why instead of sending a transaction that burns gas.
-      throw this._wrap(error, `${name}.${method}() is not executable`);
+      throw this._wrap(error, `${name}.${method}() is not executable`, contract);
     }
 
     try {
@@ -182,24 +182,47 @@ class ContractsClient {
         events,
       };
     } catch (error) {
-      throw this._wrap(error, `${name}.${method}() transaction failed`);
+      throw this._wrap(error, `${name}.${method}() transaction failed`, contract);
     }
   }
 
-  _wrap(error, context) {
+  _wrap(error, context, contract) {
     if (error instanceof ConfigurationError || error instanceof ValidationError) return error;
     if (error instanceof TransactionError) return error;
-    const reason =
+
+    const data =
+      error?.data ?? error?.info?.error?.data ?? error?.revert?.data ?? null;
+    let errorName = null;
+    let reason =
       error?.revert?.name ||
       error?.reason ||
       error?.shortMessage ||
       error?.info?.error?.message ||
       error?.message ||
       "unknown error";
+
+    // Hedera's relay often reports custom errors as "unknown custom error" and
+    // only returns the 4-byte selector + args. Decode them with the ABI so
+    // callers see PropertyAlreadyRegistered("LAND-2026-900") instead of hex.
+    if (contract?.interface && typeof data === "string" && /^0x[0-9a-fA-F]{8}/.test(data)) {
+      try {
+        const parsed = contract.interface.parseError(data);
+        if (parsed) {
+          errorName = parsed.name;
+          const formatted = parsed.args.map((arg) =>
+            typeof arg === "string" ? JSON.stringify(arg) : String(arg),
+          );
+          reason = `${parsed.name}(${formatted.join(", ")})`;
+        }
+      } catch {
+        // Not a custom error from this ABI - keep the generic reason.
+      }
+    }
+
     return new TransactionError(`${context}: ${reason}`, {
       cause: error,
-      code: "CONTRACT_CALL_FAILED",
-      details: { data: error?.data ?? error?.info?.error?.data ?? null },
+      code: errorName ?? "CONTRACT_CALL_FAILED",
+      details: { data },
     });
   }
 }

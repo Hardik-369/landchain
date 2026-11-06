@@ -190,9 +190,14 @@ class MirrorNodeClient {
     };
   }
 
-  /** Recent transactions for an account, newest first. */
+  /**
+   * Recent transactions for an account, newest first.
+   * The mirror node exposes this through `/transactions?account.id=...`; the
+   * `/accounts/{id}/transactions` sub-resource returns 404 on Hedera Testnet.
+   */
   async getAccountTransactions(accountId, { limit = 25, order = "desc" } = {}) {
-    const data = await this.request(`/accounts/${accountId}/transactions`, {
+    const data = await this.request(`/transactions`, {
+      "account.id": accountId,
       limit,
       order,
     });

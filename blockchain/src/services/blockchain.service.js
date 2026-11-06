@@ -534,6 +534,12 @@ class BlockchainService {
     };
   }
 
+  /** True when the property is already anchored in PropertyRegistry. */
+  async propertyExists(propertyId) {
+    const id = validation.propertyId(propertyId);
+    return this.contracts.call("propertyRegistry", "hasProperty", [id]);
+  }
+
   /** Read the on-chain property record and verify the supplied hash. */
   async getPropertyRecord({ propertyId, propertyHash } = {}) {
     const id = validation.propertyId(propertyId);

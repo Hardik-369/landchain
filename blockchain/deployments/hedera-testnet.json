@@ -1,0 +1,25 @@
+{
+  "network": "hedera-testnet",
+  "chainId": 296,
+  "deployer": "0xbDe59e2266EdF1F1394c20a366699f2EC369A704",
+  "recordedAt": "2026-11-07T00:00:00.000Z",
+  "contracts": {
+    "propertyRegistry": "0x85f83F17F954b98357D199826B1c8b28ddbdB9C4",
+    "investmentPool": "0x29B45a3cf3a0770C7F018f04E124eFD00F12237c",
+    "tokenAllocation": "0x26aeE113425906B4e92646f2159FA0cD21b2F5BC",
+    "resale": "0x4Eb2feE8fe75f1F72B082Dd2ABa58b0DB58a87C0"
+  },
+  "explorer": {
+    "propertyRegistry": "https://hashscan.io/testnet/contract/0x85f83F17F954b98357D199826B1c8b28ddbdB9C4",
+    "investmentPool": "https://hashscan.io/testnet/contract/0x29B45a3cf3a0770C7F018f04E124eFD00F12237c",
+    "tokenAllocation": "https://hashscan.io/testnet/contract/0x26aeE113425906B4e92646f2159FA0cD21b2F5BC",
+    "resale": "https://hashscan.io/testnet/contract/0x4Eb2feE8fe75f1F72B082Dd2ABa58b0DB58a87C0"
+  },
+  "allWired": {
+    "verifier": true,
+    "poolOperator": true,
+    "allocationOperator": true,
+    "resaleOperator": true,
+    "escrowAuthorised": true
+  }
+}

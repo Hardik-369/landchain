@@ -121,6 +121,32 @@ test("a Hedera transaction ID is normalised and its status extracted", async (t)
   assert.equal(transaction.transfers[0].accountId, "0.0.1234");
 });
 
+test("account history uses the transactions endpoint with account.id", async (t) => {
+  const mirror = new MirrorNodeClient({ baseUrl: "https://mirror.test" });
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const parsed = new URL(String(url));
+    assert.equal(parsed.pathname, "/api/v1/transactions");
+    assert.equal(parsed.searchParams.get("account.id"), "0.0.1234");
+    assert.equal(parsed.searchParams.get("limit"), "3");
+    return jsonResponse({
+      transactions: [
+        {
+          transaction_id: "0.0.1234-1700000000-000000001",
+          name: "CONTRACTCALL",
+          result: "SUCCESS",
+          consensus_timestamp: "1700000000.000000001",
+          charged_tx_fee: 100000,
+        },
+      ],
+    });
+  });
+
+  const history = await mirror.getAccountTransactions("0.0.1234", { limit: 3 });
+  assert.equal(history.length, 1);
+  assert.equal(history[0].success, true);
+  assert.equal(history[0].type, "CONTRACTCALL");
+});
+
 test("rejects an unrecognisable transaction reference", async () => {
   const mirror = new MirrorNodeClient({ baseUrl: "https://mirror.test" });
   await assert.rejects(mirror.getTransaction("0x1234"), ValidationError);

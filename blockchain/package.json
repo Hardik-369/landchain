@@ -12,8 +12,7 @@
     "test": "npm run test:contracts && npm run test:unit",
     "test:contracts": "hardhat test",
     "test:unit": "node --test test/unit/*.test.js",
-    "deploy:testnet": "hardhat run scripts/deploy.js --network hederaTestnet",
-    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
+    "deploy:testnet": "node scripts/deploy.js",
     "topic:create": "node scripts/create-topic.js",
     "verify:testnet": "node scripts/verify-testnet.js",
     "demo": "node scripts/demo-flow.js"

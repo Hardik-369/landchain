@@ -58,7 +58,7 @@ Everything lives in `/blockchain`. No other contributor's module is modified.
 cd blockchain
 npm install
 npm run compile      # Solidity → artifacts
-npm test             # 37 contract tests + 53 unit tests, no network needed
+npm test             # 37 contract tests + 60 unit tests, no network needed
 ```
 
 ### 1. Testnet account
@@ -84,8 +84,14 @@ ECDSA key. Keys stay in `.env` (git-ignored) and are never printed or returned.
 ### 2. Deploy the contracts
 
 ```bash
-npm run deploy:testnet
+npm run deploy:testnet              # deploy, save addresses, wire roles
+npm run deploy:testnet -- --fresh   # force a new deployment
+npm run deploy:testnet -- --wire-only  # re-check/repair roles on saved addresses
 ```
+
+Deployment retries transient relay failures (Hedera's JSON-RPC relay returns
+502s under load) and role wiring is idempotent, so re-running the command is
+safe.
 
 Copy the printed addresses into `.env`:
 
@@ -117,8 +123,36 @@ The operator holds the submit key, so only this backend can append events.
 ```bash
 npm run verify:testnet                  # mirror, operator, contracts, topic
 npm run verify:testnet -- --token 0.0.7001
-npm run demo                            # optional end-to-end write flow
+npm run demo                            # end-to-end write flow
+npm run demo -- --token 0.0.7001        # reuse a token from an earlier run
 ```
+
+---
+
+## Live Hedera Testnet deployment
+
+Deployed and verified with operator `0.0.11333963`
+(`0xbDe59e2266EdF1F1394c20a366699f2EC369A704`). Addresses are recorded in
+`deployments/hedera-testnet.json`.
+
+| Component | ID / address |
+| --- | --- |
+| PropertyRegistry | [`0x85f83F17F954b98357D199826B1c8b28ddbdB9C4`](https://hashscan.io/testnet/contract/0x85f83F17F954b98357D199826B1c8b28ddbdB9C4) |
+| InvestmentPool | [`0x29B45a3cf3a0770C7F018f04E124eFD00F12237c`](https://hashscan.io/testnet/contract/0x29B45a3cf3a0770C7F018f04E124eFD00F12237c) |
+| TokenAllocation | [`0x26aeE113425906B4e92646f2159FA0cD21b2F5BC`](https://hashscan.io/testnet/contract/0x26aeE113425906B4e92646f2159FA0cD21b2F5BC) |
+| ResaleContract | [`0x4Eb2feE8fe75f1F72B082Dd2ABa58b0DB58a87C0`](https://hashscan.io/testnet/contract/0x4Eb2feE8fe75f1F72B082Dd2ABa58b0DB58a87C0) |
+| HCS activity topic | `0.0.11347205` ([explorer](https://hashscan.io/testnet/topic/0.0.11347205)) |
+| Demo property token | `0.0.11347218` `LAND900` ([explorer](https://hashscan.io/testnet/token/0.0.11347218)) |
+| Demo property | `LAND-2026-900` (1 000 units, 50 000 target) |
+
+Confirmed transactions from the demo run:
+
+- property registration — [`0xa606dd45…`](https://hashscan.io/testnet/transaction/0xa606dd4562862dc1e2ec27a6528d429373eb7e694233428266cae6ee530d9961)
+- document hash anchor — [`0x8dd855a1…`](https://hashscan.io/testnet/transaction/0x8dd855a1beee63e0f3fc428e48c6fa16f89f9269ff671e3bb22dec21d64a2a41)
+- property hash update (v2) — [`0xefd1fe7a…`](https://hashscan.io/testnet/transaction/0xefd1fe7a44a2c2b333528bc3c02c459125b2b3a7fb0136f48917d0ac2fa53b59)
+- HCS event — [`0.0.11333963@1794009378.705042315`](https://hashscan.io/testnet/transaction/0.0.11333963@1794009378.705042315)
+
+`npm run verify:testnet` reports **8/8 checks passed** against this deployment.
 
 ---
 
@@ -329,18 +363,23 @@ npm test
   history, investment validation (amount mismatch, minimum, unit cap, target),
   allocation caps and ownership basis points, resale escrow/reservation/expiry/
   cancellation, unauthorised-caller rejection, full end-to-end lifecycle.
-- **53 unit tests** (`test/unit/`): canonical hashing against the backend
+- **60 unit tests** (`test/unit/`): canonical hashing against the backend
   formula, input validation, explorer URLs, Mirror Node parsing with mocked
-  HTTP (404 → 0 balance, EVM vs Hedera tx lookup), service orchestration with
-  fakes (including HCS failure tolerance and the HTS-failure compensation path),
-  and the Express adapter's allowlist and error mapping.
+  HTTP (404 → 0 balance, EVM vs Hedera tx lookup, account-history query),
+  Solidity custom-error decoding, service orchestration with fakes (including
+  HCS failure tolerance and the HTS-failure compensation path), and the Express
+  adapter's allowlist and error mapping.
 
-Live Testnet reads were verified while building this module: the public mirror
-node returned account `0.0.2`, the HBAR exchange rate and topic queries, and the
-Hedera JSON-RPC relay (`https://testnet.hashio.io/api`) reported chain `296` and
-block `42,758,204`. Writes were **not** executed because no operator credentials
-were provided; `npm run verify:testnet` and `npm run demo` are ready for the
-account holder to run after adding keys.
+Live verification against Hedera Testnet, not just mocks:
+
+- `npm run deploy:testnet` deployed all four contracts, wired every role and
+  the escrow authorisation (surviving a relay 502 mid-run via the retry path).
+- `npm run topic:create` created topic `0.0.11347205` with the submit key set.
+- `npm run demo` registered property `LAND-2026-900`, anchored a document hash,
+  wrote HCS events, created HTS token `0.0.11347218`, opened the investment pool
+  and set the unit supply — with real transaction IDs and receipts throughout.
+- `npm run verify:testnet` passes 8/8 checks (network, mirror, operator balance,
+  four contracts with bytecode, topic with submit key).
 
 ---
 

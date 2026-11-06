@@ -3,6 +3,7 @@
  *
  *   npm run demo
  *   npm run demo -- --property LAND-2026-777 --symbol LAND777
+ *   npm run demo -- --token 0.0.1234567   (reuse a token created by an earlier run)
  *
  * Requires, in blockchain/.env:
  *   HEDERA_OPERATOR_ID, HEDERA_OPERATOR_KEY  - server signing account
@@ -34,6 +35,7 @@ function step(title) {
 async function main() {
   const propertyId = arg("property", "LAND-2026-900");
   const symbol = arg("symbol", "LAND900");
+  const existingTokenId = arg("token", null);
 
   if (!hasOperatorCredentials()) {
     console.log(
@@ -68,17 +70,35 @@ async function main() {
   console.log(wallet.explorerUrl);
 
   step("Register the property hash");
+  // Fixed demo metadata: the same payload must always produce the same hash,
+  // otherwise re-running the demo can never verify the anchored digest.
   const propertyPayload = {
     id: propertyId,
     title: "LANDCHAIN demo property",
     city: "Pune",
     totalUnits: 1000,
     unitPrice: 50000,
-    notarised: new Date().toISOString(),
+    demoVersion: 1,
   };
   const propertyHash = sha256Hex(propertyPayload);
   let registration;
-  try {
+  if (await service.propertyExists(propertyId)) {
+    registration = await service.getPropertyRecord({ propertyId, propertyHash });
+    if (!registration.verified) {
+      console.log("on-chain hash differs from the demo payload - anchoring a new version");
+      const updated = await service.updatePropertyHash({
+        propertyId,
+        propertyHash,
+        actor: wallet.accountId,
+        metadata: { title: propertyPayload.title },
+      });
+      console.log(`update tx     : ${updated.transaction.transactionHash}`);
+      registration = await service.getPropertyRecord({ propertyId, propertyHash });
+    }
+    console.log(`property hash : ${registration.propertyHash} (already registered)`);
+    console.log(`registered at : ${registration.registeredAt}`);
+    console.log(`hash verified : ${registration.verified}`);
+  } else {
     registration = await service.registerProperty({
       propertyId,
       propertyHash,
@@ -89,36 +109,32 @@ async function main() {
     console.log(`tx            : ${registration.transaction.transactionHash}`);
     console.log(`explorer      : ${registration.explorerUrl}`);
     console.log(`HCS audit     : ${JSON.stringify(registration.audit)}`);
-  } catch (error) {
-    if (/already/i.test(error.message)) {
-      console.log(`Property ${propertyId} is already registered - continuing.`);
-      registration = await service.getPropertyRecord({ propertyId, propertyHash });
-      console.log(`on-chain hash : ${registration.propertyHash}`);
-      console.log(`verified      : ${registration.verified}`);
-    } else {
-      throw error;
-    }
   }
 
   step("Anchor a document hash");
   const document = `LANDCHAIN demo title deed for ${propertyId}`;
   const documentHash = sha256Hex(document);
-  const anchored = await service.storeDocumentHash({
-    propertyId,
-    documentHash,
-    documentType: "title_deed",
-    actor: wallet.accountId,
-  });
-  console.log(`document hash : ${anchored.documentHash}`);
-  console.log(`tx            : ${anchored.transaction.transactionHash}`);
-  console.log(`explorer      : ${anchored.explorerUrl}`);
+  const alreadyAnchored = await service.verifyDocumentHash({ propertyId, documentHash });
+  if (alreadyAnchored.verified) {
+    console.log(`document hash : ${documentHash} (already anchored - skipped)`);
+  } else {
+    const anchored = await service.storeDocumentHash({
+      propertyId,
+      documentHash,
+      documentType: "title_deed",
+      actor: wallet.accountId,
+    });
+    console.log(`document hash : ${anchored.documentHash}`);
+    console.log(`tx            : ${anchored.transaction.transactionHash}`);
+    console.log(`explorer      : ${anchored.explorerUrl}`);
+  }
 
   step("Record an activity event");
   const event = await service.recordPropertyEvent({
     propertyId,
     eventType: "document_verified",
     actor: wallet.accountId,
-    data: { documentHash: anchored.documentHash, verifier: wallet.accountId },
+    data: { documentHash, verifier: wallet.accountId },
   });
   console.log(`sequence      : ${event.sequenceNumber}`);
   console.log(`tx            : ${event.transactionId}`);
@@ -126,21 +142,28 @@ async function main() {
 
   step("Create the property token (HTS)");
   let token;
-  try {
-    token = await service.createPropertyToken({
-      propertyId,
-      name: `LANDCHAIN ${propertyId}`,
-      symbol,
-      totalUnits: propertyPayload.totalUnits,
-      actor: wallet.accountId,
-    });
-    console.log(`token         : ${token.tokenId} (${token.symbol})`);
+  if (existingTokenId) {
+    token = await service.getTokenInfo(existingTokenId);
+    console.log(`token         : ${token.tokenId} (${token.symbol}) reusing existing token`);
     console.log(`supply        : ${token.totalSupply}`);
-    console.log(`tx            : ${token.transactionId}`);
     console.log(`explorer      : ${token.explorerUrl}`);
-  } catch (error) {
-    console.log(`Token was not created: ${error.message}`);
-    console.log("If the token already exists for this property, reuse it or pick a new --symbol.");
+  } else {
+    try {
+      token = await service.createPropertyToken({
+        propertyId,
+        name: `LANDCHAIN ${propertyId}`,
+        symbol,
+        totalUnits: propertyPayload.totalUnits,
+        actor: wallet.accountId,
+      });
+      console.log(`token         : ${token.tokenId} (${token.symbol})`);
+      console.log(`supply        : ${token.totalSupply}`);
+      console.log(`tx            : ${token.transactionId}`);
+      console.log(`explorer      : ${token.explorerUrl}`);
+    } catch (error) {
+      console.log(`Token was not created: ${error.message}`);
+      console.log("If the token already exists, reuse it with --token 0.0.x or pick a new --symbol.");
+    }
   }
 
   step("Configure the Solidity layer");
