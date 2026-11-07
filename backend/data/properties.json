@@ -201,5 +201,40 @@
     "registryTxId": "0xafe910ca7b19d35a7c8caec0f9eb9aea566a05a5",
     "documentsCount": 4,
     "updatedAt": "2026-06-25T11:40:00.000Z"
+  },
+  {
+    "id": "LAND-2026-010",
+    "title": "Landchain Model Estate",
+    "description": "Reference asset used by the investment engine demo: a 12,000 sqft mixed-use plot in Pune split into 5,000 units of ₹1,000 each. Thresholds match the specification exactly (₹5,000 minimum, 20% buyer cap, 25% external cap).",
+    "address": "Survey 42, Hinjawadi Phase II",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "category": "land",
+    "status": "open",
+    "sellerId": "seller-001",
+    "sellerName": "Arjun Mehta",
+    "totalValue": 5000000,
+    "unitPrice": 1000,
+    "totalUnits": 5000,
+    "unitsSold": 130,
+    "unitsReserved": 0,
+    "minInvestment": 5000,
+    "expectedYield": 8.2,
+    "expectedAppreciation": 15,
+    "areaSqft": 12000,
+    "imageSeed": 10,
+    "highlights": [
+      "Model asset",
+      "5,000 units",
+      "₹1,000 per unit"
+    ],
+    "createdAt": "2026-11-01T09:00:00.000Z",
+    "verifiedAt": "2026-11-02T09:00:00.000Z",
+    "version": 1,
+    "hashVersion": 1,
+    "documentsCount": 0,
+    "propertyHash": "c097af3c741e4ebd7cb456fd84d38f2921f6ce52277bf38b464a3bc9d187848a",
+    "registryTxId": null,
+    "updatedAt": "2026-11-07T00:45:36.942Z"
   }
 ]

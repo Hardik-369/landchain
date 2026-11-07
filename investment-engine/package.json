@@ -1,0 +1,23 @@
+{
+  "name": "landchain-investment-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LANDCHAIN investment engine - thresholds, external investors, fractional ownership, pooling and the resale marketplace",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node scripts/seed.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "test": "node --test test/engine.test.js",
+    "verify": "npm test && npm run e2e"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

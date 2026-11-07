@@ -63,5 +63,102 @@
     "status": "completed",
     "reference": "0xffdd026226abad5ed0654e3c0b372275bed1eb2b0ba9748a205af9f56d95c50f",
     "createdAt": "2026-08-12T08:30:00.000Z"
+  },
+  {
+    "id": "TXN-261107-YK9S",
+    "type": "investment",
+    "description": "Landchain Model Estate · 100 units",
+    "amount": -100000,
+    "userId": "ext-001",
+    "propertyId": "LAND-2026-010",
+    "units": 100,
+    "date": "2026-11-07T00:45:36.702Z",
+    "status": "completed",
+    "reference": "REF-261107-TEZE",
+    "metadata": {
+      "investmentId": "INV-261107-A6EC",
+      "investorType": "external",
+      "ledgerMode": "local",
+      "hederaTransactionId": null,
+      "hederaSequenceNumber": null
+    },
+    "createdAt": "2026-11-07T00:45:36.702Z"
+  },
+  {
+    "id": "TXN-261107-WTNP",
+    "type": "investment",
+    "description": "Landchain Model Estate · 20 units",
+    "amount": -20000,
+    "userId": "ext-002",
+    "propertyId": "LAND-2026-010",
+    "units": 20,
+    "date": "2026-11-07T00:45:36.830Z",
+    "status": "completed",
+    "reference": "REF-261107-E4HW",
+    "metadata": {
+      "investmentId": "INV-261107-VM1D",
+      "investorType": "external",
+      "ledgerMode": "local",
+      "hederaTransactionId": null,
+      "hederaSequenceNumber": null
+    },
+    "createdAt": "2026-11-07T00:45:36.830Z"
+  },
+  {
+    "id": "TXN-261107-PZDC",
+    "type": "investment",
+    "description": "Landchain Model Estate · 10 units",
+    "amount": -10000,
+    "userId": "ext-003",
+    "propertyId": "LAND-2026-010",
+    "units": 10,
+    "date": "2026-11-07T00:45:36.942Z",
+    "status": "completed",
+    "reference": "REF-261107-9PQY",
+    "metadata": {
+      "investmentId": "INV-261107-9G2S",
+      "investorType": "external",
+      "ledgerMode": "local",
+      "hederaTransactionId": null,
+      "hederaSequenceNumber": null
+    },
+    "createdAt": "2026-11-07T00:45:36.942Z"
+  },
+  {
+    "id": "TXN-261107-85X2",
+    "type": "resale_purchase",
+    "description": "Landchain Model Estate · 40 units (resale from Ananya Rao)",
+    "amount": -48000,
+    "userId": "ext-002",
+    "propertyId": "LAND-2026-010",
+    "units": 40,
+    "date": "2026-11-07T00:45:37.101Z",
+    "status": "completed",
+    "reference": "REF-261107-QLPP",
+    "metadata": {
+      "listingId": "RSL-261107-XH6N",
+      "counterpartyId": "ext-001",
+      "investmentId": "INV-261107-4RKN",
+      "ledgerMode": "local"
+    },
+    "createdAt": "2026-11-07T00:45:37.101Z"
+  },
+  {
+    "id": "TXN-261107-ZRD9",
+    "type": "resale_sale",
+    "description": "Landchain Model Estate · 40 units sold",
+    "amount": 48000,
+    "userId": "ext-001",
+    "propertyId": "LAND-2026-010",
+    "units": 40,
+    "date": "2026-11-07T00:45:37.101Z",
+    "status": "completed",
+    "reference": "REF-261107-E9MA",
+    "metadata": {
+      "listingId": "RSL-261107-XH6N",
+      "counterpartyId": "ext-002",
+      "ledgerMode": "local"
+    },
+    "createdAt": "2026-11-07T00:45:37.101Z"
   }
 ]

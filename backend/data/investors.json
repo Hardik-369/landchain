@@ -72,5 +72,80 @@
     "propertiesCount": 1,
     "createdAt": "2026-10-01T09:00:00.000Z",
     "updatedAt": "2026-10-01T09:00:00.000Z"
+  },
+  {
+    "id": "INVSTR-261107-50F8",
+    "userId": "ext-001",
+    "name": "Ananya Rao",
+    "email": "ananya.rao@example.com",
+    "kycStatus": "verified",
+    "investorType": "external",
+    "status": "active",
+    "walletAddress": "0x1111111111111111111111111111111111111111",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-010",
+        "title": "Landchain Model Estate",
+        "units": 60,
+        "invested": 60000,
+        "ownershipPercent": 1.2
+      }
+    ],
+    "totalInvested": 60000,
+    "totalUnits": 60,
+    "propertiesCount": 1,
+    "createdAt": "2026-11-07T00:44:39.376Z",
+    "registeredAt": "2026-11-07T00:44:39.376Z",
+    "updatedAt": "2026-11-07T00:45:37.102Z"
+  },
+  {
+    "id": "INVSTR-261107-EH8J",
+    "userId": "ext-002",
+    "name": "Vikram Iyer",
+    "email": "vikram.iyer@example.com",
+    "kycStatus": "verified",
+    "investorType": "external",
+    "status": "active",
+    "walletAddress": "0x2222222222222222222222222222222222222222",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-010",
+        "title": "Landchain Model Estate",
+        "units": 60,
+        "invested": 68000,
+        "ownershipPercent": 1.2
+      }
+    ],
+    "totalInvested": 68000,
+    "totalUnits": 60,
+    "propertiesCount": 1,
+    "createdAt": "2026-11-07T00:44:39.396Z",
+    "registeredAt": "2026-11-07T00:44:39.396Z",
+    "updatedAt": "2026-11-07T00:45:37.102Z"
+  },
+  {
+    "id": "INVSTR-261107-ADWL",
+    "userId": "ext-003",
+    "name": "Meera Nair",
+    "email": "meera.nair@example.com",
+    "kycStatus": "verified",
+    "investorType": "external",
+    "status": "active",
+    "walletAddress": "0x3333333333333333333333333333333333333333",
+    "holdings": [
+      {
+        "propertyId": "LAND-2026-010",
+        "title": "Landchain Model Estate",
+        "units": 10,
+        "invested": 10000,
+        "ownershipPercent": 0.2
+      }
+    ],
+    "totalInvested": 10000,
+    "totalUnits": 10,
+    "propertiesCount": 1,
+    "createdAt": "2026-11-07T00:44:39.416Z",
+    "registeredAt": "2026-11-07T00:44:39.416Z",
+    "updatedAt": "2026-11-07T00:45:36.942Z"
   }
 ]

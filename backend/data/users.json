@@ -78,5 +78,47 @@
     "mobile": "9876543214",
     "role": "investor",
     "kycStatus": "pending"
+  },
+  {
+    "id": "ext-001",
+    "name": "Ananya Rao",
+    "email": "ananya.rao@example.com",
+    "mobile": null,
+    "role": "investor",
+    "kycStatus": "verified",
+    "walletAddress": "0x1111111111111111111111111111111111111111",
+    "status": "active",
+    "joinedAt": "2026-11-07T00:44:39.341Z",
+    "lastLoginAt": null,
+    "propertiesOwned": 1,
+    "totalInvested": 60000
+  },
+  {
+    "id": "ext-002",
+    "name": "Vikram Iyer",
+    "email": "vikram.iyer@example.com",
+    "mobile": null,
+    "role": "investor",
+    "kycStatus": "verified",
+    "walletAddress": "0x2222222222222222222222222222222222222222",
+    "status": "active",
+    "joinedAt": "2026-11-07T00:44:39.386Z",
+    "lastLoginAt": null,
+    "propertiesOwned": 1,
+    "totalInvested": 68000
+  },
+  {
+    "id": "ext-003",
+    "name": "Meera Nair",
+    "email": "meera.nair@example.com",
+    "mobile": null,
+    "role": "investor",
+    "kycStatus": "verified",
+    "walletAddress": "0x3333333333333333333333333333333333333333",
+    "status": "active",
+    "joinedAt": "2026-11-07T00:44:39.405Z",
+    "lastLoginAt": null,
+    "propertiesOwned": 1,
+    "totalInvested": 10000
   }
 ]
